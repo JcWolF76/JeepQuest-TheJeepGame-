@@ -55,9 +55,9 @@ Proprietary software — see LICENSE.
 ```
 index.html         # Sparkasia Studios landing page
 solo/index.html     # JeepQuest solo game (localStorage only, no backend yet)
-assets/              # Logo and other art — jeepquest-logo-placeholder.svg
-                       is a placeholder; swap the file in place once real
-                       art exists and every <img> reference keeps working.
+assets/              # Logo and other art — jeepquest-logo.png is the
+                       real JcWolF-branded logo (license-plate style,
+                       matches PlateQuest's presentation).
 LICENSE
 README.md
 ```
