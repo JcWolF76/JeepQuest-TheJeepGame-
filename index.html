@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+    JeepQuest (The Jeep Game) © 2026 Jesse Bliss (JcWolF). All rights reserved.
+    Proprietary software — see LICENSE. Unauthorized copying, modification,
+    redistribution, or commercial use is prohibited.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JeepQuest - The Jeep Game</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            min-height: 100vh;
+            color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .landing {
+            max-width: 560px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 24px rgba(52, 152, 219, 0.45)) drop-shadow(0 12px 28px rgba(0,0,0,0.45));
+        }
+        .studio-tag {
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #3498db;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: linear-gradient(145deg, rgba(44, 62, 80, 0.9), rgba(52, 73, 94, 0.9));
+            border: 1px solid rgba(52, 152, 219, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        .card p { color: #bdc3c7; line-height: 1.6; margin-bottom: 25px; }
+        .play-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #e67e22, #d35400);
+            color: white;
+            text-decoration: none;
+            padding: 16px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px rgba(211, 84, 0, 0.4);
+            transition: transform 0.2s ease;
+        }
+        .play-btn:hover { transform: translateY(-2px); }
+        .credit { margin-top: 30px; opacity: 0.7; font-style: italic; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="landing">
+        <img src="assets/jeepquest-logo-placeholder.svg" alt="JeepQuest" class="logo">
+        <div class="studio-tag">A Sparkasia Studios Title</div>
+        <div class="card">
+            <p>Spot Jeeps, rigs, and rare road oddities on your next drive — every vehicle is worth points. Solo mode is live now; Family and Challenge modes ride along in the same app.</p>
+            <a href="solo/index.html" class="play-btn">Play JeepQuest</a>
+        </div>
+        <p class="credit">Created by JcWolF</p>
+    </div>
+</body>
+</html>
