@@ -112,7 +112,31 @@ build step, no package manager. Fix what's asked, don't refactor
 nearby code while doing it, don't pre-build abstractions for features
 that don't exist yet.
 
-## 10. Mobile-first audience
+## 11. Update banner — keep `version.json` and both `APP_VERSION`s in sync
+
+The player is on a phone with no keyboard hard-refresh, and GitHub
+Pages / mobile browsers cache aggressively. To avoid making players
+guess why they're not seeing a new build, both `index.html` and
+`solo/index.html` poll `version.json` (on load, every 3 minutes, and
+whenever the tab regains visibility) and show a tap-to-refresh banner
+when it doesn't match their own hardcoded `APP_VERSION`. Tapping it
+reloads with a cache-busting query string, which forces a real fetch.
+
+A version bump is a **three-file change**, same discipline as
+PlateQuest's `multiplayer/` versioning:
+
+1. `version.json` — the `"version"` field.
+2. `index.html` — the `APP_VERSION` constant near the bottom.
+3. `solo/index.html` — the `APP_VERSION` constant near the top of the
+   script.
+
+All three must carry the same value (format: `YYYYMMDD<letter>`, see
+PlateQuest's CLAUDE.md section 10 for the dating rule — use today's
+actual date, don't mechanically bump a letter on a stale one). Missing
+one means the banner never fires, or fires and points at a build
+that's identical to what's already loaded.
+
+## 12. Mobile-first audience
 
 Same audience as PlateQuest — assume the player is on a phone. Keep
 chat responses short, batch tool calls, sanity-check UI at ~375–414px

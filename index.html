@@ -65,6 +65,20 @@
         }
         .play-btn:hover { transform: translateY(-2px); }
         .credit { margin-top: 30px; opacity: 0.7; font-style: italic; font-size: 14px; }
+
+        .update-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: #2c3e50;
+            font-weight: 700;
+            text-align: center;
+            padding: 12px 16px;
+            padding-top: calc(12px + env(safe-area-inset-top, 0px));
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body>
@@ -77,5 +91,32 @@
         </div>
         <p class="credit">Created by JcWolF</p>
     </div>
+    <script>
+        // Checks version.json against APP_VERSION and shows a tap-to-refresh
+        // banner when they differ. Exists because GitHub Pages / mobile
+        // browsers cache aggressively and there's no keyboard hard-refresh
+        // on a phone — see CLAUDE.md section 11.
+        const APP_VERSION = '20260913a';
+        async function checkForUpdate() {
+            try {
+                const res = await fetch(`version.json?t=${Date.now()}`, { cache: 'no-store' });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data.version && data.version !== APP_VERSION && !document.getElementById('updateBanner')) {
+                    const banner = document.createElement('div');
+                    banner.id = 'updateBanner';
+                    banner.className = 'update-banner';
+                    banner.textContent = '🔄 New update available — tap to refresh';
+                    banner.addEventListener('click', () => {
+                        window.location.href = window.location.pathname + '?_=' + Date.now();
+                    });
+                    document.body.prepend(banner);
+                }
+            } catch (error) { /* offline or blocked — silently skip */ }
+        }
+        checkForUpdate();
+        setInterval(checkForUpdate, 3 * 60 * 1000);
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) checkForUpdate(); });
+    </script>
 </body>
 </html>

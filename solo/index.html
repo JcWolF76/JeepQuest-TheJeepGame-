@@ -429,6 +429,20 @@
         }
         @keyframes slideInToast { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
+        .update-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: #2c3e50;
+            font-weight: 700;
+            text-align: center;
+            padding: 12px 16px;
+            padding-top: calc(12px + env(safe-area-inset-top, 0px));
+            cursor: pointer;
+            z-index: 10001;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
         @media (max-width: 768px) {
             .container { padding: 15px; }
             .vehicle-grid { grid-template-columns: 1fr; }
@@ -590,6 +604,30 @@
         ];
         const vehicleById = Object.fromEntries(vehicleData.map(v => [v.id, v]));
         const MILESTONE = 100; // points per progress-bar fill cycle
+
+        // Checks version.json against APP_VERSION and shows a tap-to-refresh
+        // banner when they differ. Exists because GitHub Pages / mobile
+        // browsers cache aggressively and there's no keyboard hard-refresh
+        // on a phone — see CLAUDE.md section 11. Keep this in sync with the
+        // matching block in the root index.html.
+        const APP_VERSION = '20260913a';
+        async function checkForUpdate() {
+            try {
+                const res = await fetch(`../version.json?t=${Date.now()}`, { cache: 'no-store' });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data.version && data.version !== APP_VERSION && !document.getElementById('updateBanner')) {
+                    const banner = document.createElement('div');
+                    banner.id = 'updateBanner';
+                    banner.className = 'update-banner';
+                    banner.textContent = '🔄 New update available — tap to refresh';
+                    banner.addEventListener('click', () => {
+                        window.location.href = window.location.pathname + '?_=' + Date.now();
+                    });
+                    document.body.prepend(banner);
+                }
+            } catch (error) { /* offline or blocked — silently skip */ }
+        }
 
         const STORAGE_KEYS = {
             profiles: 'jeepquest_profiles_v1',
@@ -1193,6 +1231,10 @@
         document.getElementById('hideShareBtn').addEventListener('click', () => { shareSection.style.display = 'none'; });
 
         if (readJSON(STORAGE_KEYS.darkMode, false)) document.body.classList.add('dark');
+
+        checkForUpdate();
+        setInterval(checkForUpdate, 3 * 60 * 1000);
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) checkForUpdate(); });
     </script>
 </body>
 </html>
