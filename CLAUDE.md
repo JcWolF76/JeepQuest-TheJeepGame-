@@ -86,7 +86,6 @@ there's no separate minus button. Current point table:
 | Law enforcement | 7 |
 | Fire truck | 8 |
 | Cybertruck | 9 |
-| Double mail-truck semi | 10 |
 | Batmobile trike (2 front / 1 rear, side-by-side seats) | 20 |
 | Tuktuk (3-wheel scooter taxi) | 50 |
 

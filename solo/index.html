@@ -642,7 +642,6 @@
             { id: 'lawEnforcement', name: 'Law Enforcement', icon: '🚓', points: 7, color: '#34495e' },
             { id: 'fireTruck', name: 'Fire Truck', icon: '🚒', points: 8, color: '#e74c3c' },
             { id: 'cybertruck', name: 'Cybertruck', icon: '🔺', points: 9, color: '#95a5a6' },
-            { id: 'mailSemi', name: 'Mail Semi', icon: '🚛', points: 10, color: '#c0392b', note: 'Double mail-truck semi' },
             { id: 'batmobile', name: 'Batmobile', icon: '🦇', points: 20, color: '#8e44ad', note: '2 wheels front, 1 rear, two seats side-by-side' },
             { id: 'tuktuk', name: 'Tuktuk', icon: '🛺', points: 50, color: '#e67e22', note: '3-wheel scooter taxi' }
         ];
@@ -667,7 +666,7 @@
         // browsers cache aggressively and there's no keyboard hard-refresh
         // on a phone — see CLAUDE.md section 11. Keep this in sync with the
         // matching block in the root index.html.
-        const APP_VERSION = '20260913b';
+        const APP_VERSION = '20260913c';
         async function checkForUpdate() {
             try {
                 const res = await fetch(`../version.json?t=${Date.now()}`, { cache: 'no-store' });
