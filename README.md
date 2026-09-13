@@ -1,9 +1,9 @@
 # JeepQuest (The Jeep Game)
 
 A road-trip vehicle-spotting game from **Sparkasia Studios**, sister title
-to [PlateQuest](https://github.com/JcWolF76/PlateQuest). Spot Jeeps and
-other vehicles on the road, tally your points, and see who racks up the
-highest score on the trip.
+to [PlateQuest](https://github.com/JcWolF76/PlateQuest). Only a specific
+set of vehicles score — see the table below — tally what you spot and
+see who racks up the highest score on the trip.
 
 **Play:** https://jcwolf76.github.io/JeepQuest-TheJeepGame-/
 
