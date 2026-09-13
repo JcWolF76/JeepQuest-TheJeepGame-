@@ -96,7 +96,7 @@
         // banner when they differ. Exists because GitHub Pages / mobile
         // browsers cache aggressively and there's no keyboard hard-refresh
         // on a phone — see CLAUDE.md section 11.
-        const APP_VERSION = '20260913c';
+        const APP_VERSION = '20260913d';
         async function checkForUpdate() {
             try {
                 const res = await fetch(`version.json?t=${Date.now()}`, { cache: 'no-store' });

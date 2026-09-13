@@ -58,6 +58,12 @@ solo/index.html     # JeepQuest solo game (localStorage only, no backend yet)
 assets/              # Logo and other art — jeepquest-logo.png is the
                        real JcWolF-branded logo (license-plate style,
                        matches PlateQuest's presentation).
+assets/icons/        # Custom per-category tile icons, named to match
+                       vehicleData ids (jeepOg.png, tuktuk.png, etc.) —
+                       white silhouette on transparent PNG, cropped
+                       tight and resized to 160px max. `vehicleData`'s
+                       `icon` field (an emoji) is kept only as the
+                       glyph shown in toast messages, not the tile art.
 LICENSE
 README.md
 ```
