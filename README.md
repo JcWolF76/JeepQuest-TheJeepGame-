@@ -17,7 +17,16 @@ are split into two classes:
   Cherokee, Wagoneer, Grand Wagoneer, etc.)
 
 Both Jeep classes are worth 1 point per spot. Other vehicles score
-higher the rarer they are, up to the 50-point Tuktuk.
+higher the rarer they are, up to the 50-point Tuktuk. Tap a vehicle's
+tile to log a spot; hold it down to undo the last one.
+
+Bonus points stack on top of the base value:
+- **First Find** — the first time anyone spots a category on a trip, it
+  scores double.
+- **First Caller** — in Family Mode, the first time you personally spot
+  a category, you get +50%.
+- **Streak Bonus** — every 5th spot of the same category adds a flat
+  +10.
 
 ## Status
 

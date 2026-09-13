@@ -238,7 +238,6 @@
         .btn-secondary { background: linear-gradient(145deg, #34495e, #2c3e50); color: #bdc3c7; border: 1px solid rgba(189, 195, 199, 0.3); }
         .btn-secondary:hover { background: linear-gradient(145deg, #4a6741, #34495e); transform: translateY(-1px); color: #ecf0f1; }
 
-        .btn-mini { padding: 10px 16px; font-size: 18px; line-height: 1; border-radius: 10px; }
         .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
 
         .mode-selection { display: flex; gap: 20px; flex-wrap: wrap; }
@@ -320,67 +319,112 @@
         .stat-label { font-size: 12px; color: #bdc3c7; margin-bottom: 5px; }
         .stat-value { font-size: 18px; font-weight: bold; color: #3498db; }
 
-        .vehicles-section { padding: 30px; }
+        .vehicles-section { padding: 20px 20px 30px; }
 
-        .vehicle-grid {
+        .spot-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
         }
 
-        .vehicle-card {
+        .spot-tile {
             background: linear-gradient(145deg, rgba(52, 73, 94, 0.9), rgba(44, 62, 80, 0.9));
-            border: 2px solid rgba(52, 152, 219, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(52, 152, 219, 0.25);
+            border-radius: 14px;
+            padding: 8px 6px 7px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 4px;
             position: relative;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            text-align: center;
         }
 
-        .vehicle-card.spotted { border-color: #2ecc71; box-shadow: 0 15px 35px rgba(39, 174, 96, 0.3); }
-        .vehicle-card.rare { border-color: #f1c40f; }
-        .vehicle-card.rare.spotted { box-shadow: 0 15px 35px rgba(241, 196, 15, 0.35); }
+        .spot-tile:active { transform: scale(0.94); }
+        .spot-tile.spotted { border-color: #2ecc71; }
+        .spot-tile.rare { border-color: #f1c40f; }
+        .spot-tile.rare.spotted { border-color: #f1c40f; box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.35), 0 4px 10px rgba(0,0,0,0.2); }
 
-        .rare-ribbon {
-            position: absolute;
-            top: -10px;
-            right: 14px;
-            background: linear-gradient(45deg, #f1c40f, #f39c12);
-            color: #2c3e50;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 10px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-        }
-
-        .vehicle-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
-        .vehicle-icon { font-size: 32px; line-height: 1; }
-        .vehicle-name { font-size: 17px; font-weight: bold; }
-        .vehicle-note { font-size: 12px; opacity: 0.7; margin-top: 4px; line-height: 1.3; }
-        .vehicle-points {
-            display: inline-block;
-            margin-top: 6px;
-            background: rgba(52, 152, 219, 0.2);
-            color: #5dade2;
-            border: 1px solid rgba(52, 152, 219, 0.4);
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .vehicle-tally { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        .vehicle-count { font-size: 28px; font-weight: 800; color: #ecf0f1; min-width: 40px; text-align: center; }
-        .vehicle-buttons { display: flex; gap: 8px; }
-
-        .vehicle-card.celebrating { animation: celebrate 0.6s ease; }
+        .spot-tile.celebrating { animation: celebrate 0.5s ease; }
+        .spot-tile.undo-flash { animation: undoFlash 0.3s ease; }
         @keyframes celebrate {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.04); }
+            40% { transform: scale(1.12); }
+        }
+        @keyframes undoFlash {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        .spot-icon-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
+            flex-shrink: 0;
+        }
+
+        .spot-name {
+            font-size: 10.5px;
+            font-weight: 700;
+            line-height: 1.15;
+            min-height: 2.3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spot-points-chip {
+            font-size: 10px;
+            font-weight: 800;
+            color: #5dade2;
+            background: rgba(52, 152, 219, 0.18);
+            border-radius: 8px;
+            padding: 1px 6px;
+        }
+
+        .spot-rare-star {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            font-size: 14px;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+        }
+
+        .spot-count-badge {
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            background: #27ae60;
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .spot-hint {
+            font-size: 12px;
+            color: #95a5a6;
+            margin-top: 4px;
         }
 
         .actions-section {
@@ -445,7 +489,7 @@
 
         @media (max-width: 768px) {
             .container { padding: 15px; }
-            .vehicle-grid { grid-template-columns: 1fr; }
+            .spot-grid { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; }
             .input-row { flex-direction: column; align-items: stretch; }
             .mode-selection { flex-direction: column; }
             .actions-section { flex-direction: column; }
@@ -556,9 +600,9 @@
             </div>
 
             <div class="vehicles-section">
-                <h3 style="margin-bottom: 15px; color: #3498db; font-size: 24px;">🚗 Vehicle Log</h3>
-                <p style="color: #bdc3c7; margin-bottom: 25px; font-size: 16px;">Tap <strong>+</strong> every time you spot one. Points are per spot, not per category — spot ten Jeeps, score ten points.</p>
-                <div class="vehicle-grid" id="vehicleGrid"></div>
+                <h3 style="margin-bottom: 6px; color: #3498db; font-size: 22px;">🚗 Vehicle Log</h3>
+                <p class="spot-hint"><strong>Tap</strong> a tile to log a spot · <strong>hold</strong> to undo the last one. First find of a category doubles its points, and every 5th spot streaks a +10 bonus.</p>
+                <div class="spot-grid" id="vehicleGrid"></div>
             </div>
 
             <div class="actions-section">
@@ -588,29 +632,42 @@
         // Wagoneer, Grand Wagoneer, etc.), both worth 1 point regardless of
         // which specific model is spotted.
         const vehicleData = [
-            { id: 'jeepOg', name: 'Jeep — OG', icon: '🟩', points: 1, note: 'Original body style: Wrangler, Sahara, CJ, etc.' },
-            { id: 'jeepNog', name: 'Jeep — NOG', icon: '🟦', points: 1, note: 'Compass, Gladiator, Cherokee, Grand Cherokee, Wagoneer, Grand Wagoneer, etc.' },
-            { id: 'motorcycle', name: 'Motorcycle', icon: '🏍️', points: 3 },
-            { id: 'schoolBus', name: 'School Bus', icon: '🚌', points: 3 },
-            { id: 'trashTruck', name: 'Trash / Recycling Truck', icon: '🗑️', points: 4 },
-            { id: 'mailTruck', name: 'Mail Truck', icon: '📮', points: 5 },
-            { id: 'boat', name: 'Boat', icon: '🚤', points: 6 },
-            { id: 'lawEnforcement', name: 'Law Enforcement', icon: '🚓', points: 7 },
-            { id: 'fireTruck', name: 'Fire Truck', icon: '🚒', points: 8 },
-            { id: 'cybertruck', name: 'Cybertruck', icon: '🔺', points: 9 },
-            { id: 'mailSemi', name: 'Double Mail-Truck Semi', icon: '🚛', points: 10 },
-            { id: 'batmobile', name: 'Batmobile Trike', icon: '🦇', points: 20, note: '2 wheels front, 1 rear, two seats side-by-side' },
-            { id: 'tuktuk', name: 'Tuktuk', icon: '🛺', points: 50, note: '3-wheel scooter taxi' }
+            { id: 'jeepOg', name: 'Jeep OG', icon: '🟩', points: 1, color: '#27ae60', note: 'Original body style: Wrangler, Sahara, CJ, etc.' },
+            { id: 'jeepNog', name: 'Jeep NOG', icon: '🟦', points: 1, color: '#2980b9', note: 'Compass, Gladiator, Cherokee, Grand Cherokee, Wagoneer, Grand Wagoneer, etc.' },
+            { id: 'motorcycle', name: 'Motorcycle', icon: '🏍️', points: 3, color: '#7f8c8d' },
+            { id: 'schoolBus', name: 'School Bus', icon: '🚌', points: 3, color: '#f1c40f' },
+            { id: 'trashTruck', name: 'Trash Truck', icon: '🗑️', points: 4, color: '#16a085' },
+            { id: 'mailTruck', name: 'Mail Truck', icon: '📮', points: 5, color: '#2471a3' },
+            { id: 'boat', name: 'Boat', icon: '🚤', points: 6, color: '#00b4d8' },
+            { id: 'lawEnforcement', name: 'Law Enforcement', icon: '🚓', points: 7, color: '#34495e' },
+            { id: 'fireTruck', name: 'Fire Truck', icon: '🚒', points: 8, color: '#e74c3c' },
+            { id: 'cybertruck', name: 'Cybertruck', icon: '🔺', points: 9, color: '#95a5a6' },
+            { id: 'mailSemi', name: 'Mail Semi', icon: '🚛', points: 10, color: '#c0392b', note: 'Double mail-truck semi' },
+            { id: 'batmobile', name: 'Batmobile', icon: '🦇', points: 20, color: '#8e44ad', note: '2 wheels front, 1 rear, two seats side-by-side' },
+            { id: 'tuktuk', name: 'Tuktuk', icon: '🛺', points: 50, color: '#e67e22', note: '3-wheel scooter taxi' }
         ];
         const vehicleById = Object.fromEntries(vehicleData.map(v => [v.id, v]));
         const MILESTONE = 100; // points per progress-bar fill cycle
+
+        // Bonus rules ("make this rock" — 2025-09 redesign):
+        //  - First Find: the first time ANY spotter logs a category on this
+        //    trip, that tap scores double points.
+        //  - First Caller (Family Mode only, 2+ contributors): the first
+        //    time THIS contributor personally logs a category on this trip,
+        //    they get +50% on top of the base points.
+        //  - Streak Bonus: every 5th spot of the same category (5th, 10th,
+        //    15th...) adds a flat +10, regardless of mode.
+        // Bonuses can stack (e.g. a brand-new category's very first tap in
+        // Family Mode can trigger both First Find and First Caller).
+        const STREAK_EVERY = 5;
+        const STREAK_BONUS = 10;
 
         // Checks version.json against APP_VERSION and shows a tap-to-refresh
         // banner when they differ. Exists because GitHub Pages / mobile
         // browsers cache aggressively and there's no keyboard hard-refresh
         // on a phone — see CLAUDE.md section 11. Keep this in sync with the
         // matching block in the root index.html.
-        const APP_VERSION = '20260913a';
+        const APP_VERSION = '20260913b';
         async function checkForUpdate() {
             try {
                 const res = await fetch(`../version.json?t=${Date.now()}`, { cache: 'no-store' });
@@ -694,15 +751,32 @@
 
         function normalizeTripRecord(trip) {
             if (!trip) return null;
-            const tally = {};
-            vehicleData.forEach(v => { tally[v.id] = Math.max(0, Math.round((trip.tally && trip.tally[v.id]) || 0)); });
-
-            const contributorTally = {};
             const contributors = Array.isArray(trip.contributors) && trip.contributors.length ? trip.contributors : [trip.profileName || 'Player'];
-            contributors.forEach(name => {
-                const existing = (trip.contributorTally && trip.contributorTally[name]) || {};
-                contributorTally[name] = {};
-                vehicleData.forEach(v => { contributorTally[name][v.id] = Math.max(0, Math.round(existing[v.id] || 0)); });
+
+            // pointsLog is the single source of truth: one entry per tap,
+            // {points, spotter, at}. Total/spots/bonus/contributor totals
+            // are all derived from it (see tripTotalPoints etc. below), so
+            // undo (popping the last entry) is always exactly correct.
+            const pointsLog = {};
+            vehicleData.forEach(v => {
+                if (trip.pointsLog && Array.isArray(trip.pointsLog[v.id])) {
+                    pointsLog[v.id] = trip.pointsLog[v.id]
+                        .map(entry => ({
+                            points: Math.max(0, Math.round(entry.points || 0)),
+                            spotter: entry.spotter || null,
+                            at: entry.at || Date.now()
+                        }));
+                } else if (trip.tally && trip.tally[v.id]) {
+                    // Migrate a pre-bonus-system trip (flat tally + separate
+                    // contributorTally counts): synthesize one log entry per
+                    // existing spot at base points, spotter unattributed.
+                    // No retroactive bonuses — safe and keeps old totals.
+                    pointsLog[v.id] = Array.from({ length: Math.max(0, Math.round(trip.tally[v.id])) }, () => ({
+                        points: v.points, spotter: null, at: trip.updatedAt || Date.now()
+                    }));
+                } else {
+                    pointsLog[v.id] = [];
+                }
             });
 
             return {
@@ -712,8 +786,7 @@
                 name: trip.name,
                 mode: trip.mode || 'solo',
                 contributors,
-                tally,
-                contributorTally,
+                pointsLog,
                 challengeStartTime: trip.challengeStartTime || null,
                 createdAt: trip.createdAt || Date.now(),
                 updatedAt: trip.updatedAt || Date.now(),
@@ -737,13 +810,31 @@
             if (currentTripData) currentGameMode = currentTripData.mode || 'solo';
         }
 
+        function tallyFor(trip, vehicleId) {
+            return trip && trip.pointsLog[vehicleId] ? trip.pointsLog[vehicleId].length : 0;
+        }
         function tripTotalPoints(trip) {
             if (!trip) return 0;
-            return vehicleData.reduce((sum, v) => sum + (trip.tally[v.id] || 0) * v.points, 0);
+            return vehicleData.reduce((sum, v) => sum + (trip.pointsLog[v.id] || []).reduce((s, e) => s + e.points, 0), 0);
+        }
+        function tripBasePoints(trip) {
+            if (!trip) return 0;
+            return vehicleData.reduce((sum, v) => sum + tallyFor(trip, v.id) * v.points, 0);
+        }
+        function tripBonusPoints(trip) {
+            return tripTotalPoints(trip) - tripBasePoints(trip);
         }
         function tripTotalSpots(trip) {
             if (!trip) return 0;
-            return vehicleData.reduce((sum, v) => sum + (trip.tally[v.id] || 0), 0);
+            return vehicleData.reduce((sum, v) => sum + tallyFor(trip, v.id), 0);
+        }
+        function contributorPoints(trip, name) {
+            if (!trip) return 0;
+            let total = 0;
+            vehicleData.forEach(v => {
+                (trip.pointsLog[v.id] || []).forEach(entry => { if (entry.spotter === name) total += entry.points; });
+            });
+            return total;
         }
 
         function maybeUpdatePersonalBest() {
@@ -874,8 +965,7 @@
                 name: fullName,
                 mode: currentGameMode,
                 contributors: [profile?.name || 'Player'],
-                tally: {},
-                contributorTally: {},
+                pointsLog: {},
                 challengeStartTime: currentGameMode === 'versus' ? Date.now() : null,
                 createdAt: Date.now(),
                 updatedAt: Date.now()
@@ -946,7 +1036,7 @@
             const section = document.getElementById('contributorSection');
             if (!section || !currentTripData) return;
             const rows = currentTripData.contributors.map(name => {
-                const points = vehicleData.reduce((sum, v) => sum + ((currentTripData.contributorTally[name]?.[v.id] || 0) * v.points), 0);
+                const points = contributorPoints(currentTripData, name);
                 const isActive = name === activeSpotter;
                 return `<span class="contributor-badge" style="${isActive ? 'background:#27ae60;' : ''}">${escapeHtml(name)}: ${points} pt${points === 1 ? '' : 's'}</span>`;
             }).join('');
@@ -975,8 +1065,6 @@
             const trimmed = name.trim();
             if (currentTripData.contributors.includes(trimmed)) { alert('That contributor is already on this trip.'); return; }
             currentTripData.contributors.push(trimmed);
-            currentTripData.contributorTally[trimmed] = {};
-            vehicleData.forEach(v => { currentTripData.contributorTally[trimmed][v.id] = 0; });
             activeSpotter = trimmed;
             persistCurrentTrip();
             updateContributorSection();
@@ -1033,8 +1121,9 @@
         function updateScore() {
             const points = tripTotalPoints(currentTripData);
             const spots = tripTotalSpots(currentTripData);
+            const bonus = tripBonusPoints(currentTripData);
             scoreDisplay.textContent = `🏆 ${points.toLocaleString()} pts`;
-            scoreSubline.textContent = `${spots.toLocaleString()} vehicle${spots === 1 ? '' : 's'} spotted`;
+            scoreSubline.textContent = `${spots.toLocaleString()} vehicle${spots === 1 ? '' : 's'} spotted${bonus > 0 ? ` · 🎉 ${bonus.toLocaleString()} bonus` : ''}`;
             progressFill.style.width = `${(points % MILESTONE) / MILESTONE * 100}%`;
         }
 
@@ -1048,63 +1137,103 @@
             return String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
         }
 
+        const LONG_PRESS_MS = 550;
+
         function renderVehicleGrid() {
             vehicleGrid.innerHTML = '';
             const hasTrip = !!currentTripData;
 
             vehicleData.forEach(v => {
-                const count = hasTrip ? (currentTripData.tally[v.id] || 0) : 0;
+                const count = hasTrip ? tallyFor(currentTripData, v.id) : 0;
                 const isRare = v.points >= 20;
-                const card = document.createElement('div');
-                card.className = `vehicle-card${count > 0 ? ' spotted' : ''}${isRare ? ' rare' : ''}`;
-                card.dataset.vehicleId = v.id;
-                card.innerHTML = `
-                    ${isRare ? '<div class="rare-ribbon">⭐ RARE</div>' : ''}
-                    <div class="vehicle-top">
-                        <div class="vehicle-icon">${v.icon}</div>
-                        <div>
-                            <div class="vehicle-name">${escapeHtml(v.name)}</div>
-                            ${v.note ? `<div class="vehicle-note">${escapeHtml(v.note)}</div>` : ''}
-                            <div class="vehicle-points">${v.points} pt${v.points === 1 ? '' : 's'} / spot</div>
-                        </div>
-                    </div>
-                    <div class="vehicle-tally">
-                        <button class="btn btn-secondary btn-mini" data-action="minus" ${count <= 0 ? 'disabled' : ''}>−</button>
-                        <div class="vehicle-count">${count}</div>
-                        <button class="btn btn-primary btn-mini" data-action="plus" ${hasTrip ? '' : 'disabled'}>+</button>
-                    </div>
+                const tile = document.createElement('div');
+                tile.className = `spot-tile${count > 0 ? ' spotted' : ''}${isRare ? ' rare' : ''}`;
+                tile.dataset.vehicleId = v.id;
+                tile.setAttribute('role', 'button');
+                tile.setAttribute('tabindex', hasTrip ? '0' : '-1');
+                tile.setAttribute('aria-label', `${v.name}, ${v.points} points per spot, ${count} spotted. Tap to log a spot, hold to undo the last one.`);
+                tile.title = v.note ? `${v.name} — ${v.note}` : v.name;
+                tile.innerHTML = `
+                    ${count > 0 ? `<div class="spot-count-badge">×${count}</div>` : ''}
+                    ${isRare ? '<div class="spot-rare-star">⭐</div>' : ''}
+                    <div class="spot-icon-badge" style="background: ${v.color}33; border: 2px solid ${v.color};">${v.icon}</div>
+                    <div class="spot-name">${escapeHtml(v.name)}</div>
+                    <div class="spot-points-chip">${v.points} pt${v.points === 1 ? '' : 's'}</div>
                 `;
-                card.querySelector('[data-action="plus"]').addEventListener('click', () => adjustTally(v.id, 1, card));
-                card.querySelector('[data-action="minus"]').addEventListener('click', () => adjustTally(v.id, -1, card));
-                vehicleGrid.appendChild(card);
+
+                if (hasTrip) {
+                    let pressTimer = null;
+                    let longPressFired = false;
+                    const clearPressTimer = () => { clearTimeout(pressTimer); pressTimer = null; };
+                    tile.addEventListener('pointerdown', () => {
+                        longPressFired = false;
+                        clearPressTimer();
+                        pressTimer = setTimeout(() => {
+                            longPressFired = true;
+                            adjustTally(v.id, -1, tile);
+                        }, LONG_PRESS_MS);
+                    });
+                    ['pointerup', 'pointerleave', 'pointercancel'].forEach(evt => tile.addEventListener(evt, clearPressTimer));
+                    tile.addEventListener('click', () => {
+                        if (longPressFired) { longPressFired = false; return; }
+                        adjustTally(v.id, 1, tile);
+                    });
+                    tile.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); adjustTally(v.id, 1, tile); }
+                        if (e.key === 'Backspace' || e.key === 'Delete') { e.preventDefault(); adjustTally(v.id, -1, tile); }
+                    });
+                }
+
+                vehicleGrid.appendChild(tile);
             });
         }
 
-        function adjustTally(vehicleId, delta, cardEl) {
+        function adjustTally(vehicleId, delta, tileEl) {
             if (!currentTripData) { alert('Create or select a trip first!'); return; }
-            const current = currentTripData.tally[vehicleId] || 0;
-            const next = Math.max(0, current + delta);
-            if (next === current) return;
-            currentTripData.tally[vehicleId] = next;
-
-            if (delta > 0 && currentGameMode === 'collab' && activeSpotter) {
-                if (!currentTripData.contributorTally[activeSpotter]) {
-                    currentTripData.contributorTally[activeSpotter] = {};
-                    vehicleData.forEach(v => { currentTripData.contributorTally[activeSpotter][v.id] = 0; });
-                }
-                currentTripData.contributorTally[activeSpotter][vehicleId] = (currentTripData.contributorTally[activeSpotter][vehicleId] || 0) + 1;
-            }
-
-            persistCurrentTrip();
-            updateScore();
-            renderVehicleGrid();
-            if (currentGameMode === 'collab') updateContributorSection();
+            const vehicle = vehicleById[vehicleId];
+            const log = currentTripData.pointsLog[vehicleId] || (currentTripData.pointsLog[vehicleId] = []);
 
             if (delta > 0) {
-                const refreshedCard = vehicleGrid.querySelector(`[data-vehicle-id="${vehicleId}"]`);
-                if (refreshedCard) {
-                    refreshedCard.classList.add('celebrating');
-                    setTimeout(() => refreshedCard.classList.remove('celebrating'), 600);
+                const preCount = log.length;
+                const isGlobalFirst = preCount === 0;
+                const isPersonalFirst = currentGameMode === 'collab' && currentTripData.contributors.length > 1
+                    && !!activeSpotter && !log.some(e => e.spotter === activeSpotter);
+
+                let multiplier = 1;
+                const bonusNotes = [];
+                if (isGlobalFirst) { multiplier += 1; bonusNotes.push('🆕 First Find ×2'); }
+                if (isPersonalFirst) { multiplier += 0.5; bonusNotes.push('🙋 First Caller +50%'); }
+
+                let points = Math.round(vehicle.points * multiplier);
+                const postCount = preCount + 1;
+                if (postCount % STREAK_EVERY === 0) {
+                    points += STREAK_BONUS;
+                    bonusNotes.push(`🔥 ${postCount}-Spot Streak +${STREAK_BONUS}`);
+                }
+
+                log.push({ points, spotter: currentGameMode === 'collab' ? activeSpotter : null, at: Date.now() });
+                persistCurrentTrip();
+                updateScore();
+                renderVehicleGrid();
+                if (currentGameMode === 'collab') updateContributorSection();
+
+                const refreshedTile = vehicleGrid.querySelector(`[data-vehicle-id="${vehicleId}"]`);
+                if (refreshedTile) {
+                    refreshedTile.classList.add('celebrating');
+                    setTimeout(() => refreshedTile.classList.remove('celebrating'), 500);
+                }
+                showToast(bonusNotes.length ? `${vehicle.icon} +${points} pts — ${bonusNotes.join(' · ')}` : `${vehicle.icon} +${points} pt${points === 1 ? '' : 's'}`);
+            } else {
+                if (!log.length) return;
+                log.pop();
+                persistCurrentTrip();
+                updateScore();
+                renderVehicleGrid();
+                if (currentGameMode === 'collab') updateContributorSection();
+
+                if (tileEl) {
+                    tileEl.classList.add('undo-flash');
+                    setTimeout(() => tileEl.classList.remove('undo-flash'), 300);
                 }
             }
         }
@@ -1112,11 +1241,7 @@
         function resetTrip() {
             if (!currentTripData) return;
             if (!confirm(`Reset "${currentTripData.name}"? This clears every tally on this trip.`)) return;
-            vehicleData.forEach(v => { currentTripData.tally[v.id] = 0; });
-            currentTripData.contributors.forEach(name => {
-                currentTripData.contributorTally[name] = {};
-                vehicleData.forEach(v => { currentTripData.contributorTally[name][v.id] = 0; });
-            });
+            currentTripData.pointsLog = {};
             if (currentGameMode === 'versus') currentTripData.challengeStartTime = Date.now();
             persistCurrentTrip();
             updateScore();
@@ -1134,12 +1259,11 @@
         function shareTrip() {
             if (!currentTripData) { alert('Create or select a trip first!'); return; }
             const payload = {
-                type: 'jeepquest_trip_v1',
+                type: 'jeepquest_trip_v2',
                 name: currentTripData.name,
                 mode: currentTripData.mode,
                 contributors: currentTripData.contributors,
-                tally: currentTripData.tally,
-                contributorTally: currentTripData.contributorTally
+                pointsLog: currentTripData.pointsLog
             };
             document.getElementById('shareSectionTitle').textContent = '📤 Share Your Trip';
             document.getElementById('shareSectionHint').textContent = 'Copy this code and send it to whoever you want to share progress with:';
@@ -1154,7 +1278,7 @@
             if (!code) return;
             try {
                 const payload = decodeTripCode(code);
-                if (payload.type !== 'jeepquest_trip_v1') throw new Error('Not a JeepQuest trip code');
+                if (payload.type !== 'jeepquest_trip_v2' && payload.type !== 'jeepquest_trip_v1') throw new Error('Not a JeepQuest trip code');
                 const profile = getCurrentProfile();
                 const tripId = createId(`trip_${slugify(payload.name)}`);
                 currentTripData = normalizeTripRecord({
@@ -1164,8 +1288,8 @@
                     name: `${payload.name}_imported`,
                     mode: payload.mode || 'solo',
                     contributors: payload.contributors,
+                    pointsLog: payload.pointsLog, // v1 codes have no pointsLog; normalizeTripRecord falls back to payload.tally below
                     tally: payload.tally,
-                    contributorTally: payload.contributorTally,
                     challengeStartTime: payload.mode === 'versus' ? Date.now() : null,
                     createdAt: Date.now(),
                     updatedAt: Date.now(),

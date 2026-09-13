@@ -64,11 +64,15 @@ README.md
 
 ## 6. Scoring model
 
-Vehicle categories and points-per-spot live in the `vehicleData` array
-near the top of `solo/index.html`'s script. Every tap of "+" logs one
-spot and adds that category's point value — this is a running tally,
-not a spot-once checklist like PlateQuest's state plates. Current
-table:
+Vehicle categories, their points-per-spot, and their tile color live
+in the `vehicleData` array near the top of `solo/index.html`'s script.
+Each tile in the grid is tapped once per spot (no +/- steppers) and
+logs one entry to that category's `pointsLog` — this is a running
+tally, not a spot-once checklist like PlateQuest's state plates.
+Holding a tile down (≥550ms, `LONG_PRESS_MS`) undoes the single most
+recent spot logged for that category, exactly reversing whatever
+points it awarded (see bonus rules below) — this is the only undo;
+there's no separate minus button. Current point table:
 
 | Category | Points |
 |---|---|
@@ -86,8 +90,33 @@ table:
 | Batmobile trike (2 front / 1 rear, side-by-side seats) | 20 |
 | Tuktuk (3-wheel scooter taxi) | 50 |
 
-If the user changes a point value or adds a category, it's a one-line
-edit to `vehicleData` — no other file needs touching for solo mode.
+If the user changes a point value, tile color, or adds a category,
+it's a one-line edit to `vehicleData` — no other file needs touching
+for solo mode.
+
+### Bonus rules ("finder bonus")
+
+All three stack independently and are computed fresh on every tap in
+`adjustTally()` — nothing is pre-stored as a flag, so undo (popping the
+last `pointsLog` entry) always exactly reverses whatever bonuses that
+tap earned:
+
+- **First Find (×2, all modes):** the first time *any* spotter logs a
+  given category on a trip, that tap scores double points.
+- **First Caller (+50%, Family Mode only, 2+ contributors):** the
+  first time *this contributor personally* logs a category on the
+  trip, they get +50% on top of base points. Requires Family Mode
+  with more than one contributor — solo/Challenge trips never trigger
+  it since there's only ever one spotter.
+- **Streak Bonus (+10 flat, all modes):** every 5th spot of the same
+  category (`STREAK_EVERY`/`STREAK_BONUS` constants) on a trip adds a
+  flat bonus, independent of the multiplier bonuses above.
+
+A tap's award is `round(basePoints × multiplier) + streakBonus`, where
+multiplier starts at 1 and gains +1 (First Find) and/or +0.5 (First
+Caller). The score section's subline shows the running bonus total
+(`total points − Σ tally×basePoints`) whenever it's nonzero, and every
+tap shows a toast naming which bonuses fired.
 
 ## 7. Player tags are case-sensitive
 
