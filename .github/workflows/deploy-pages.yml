@@ -9,11 +9,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    # Both branches are kept in sync and both are deployable: the repo's
-    # default branch is still claude/jeepquest-game-dev-k8i6ss, and the
-    # github-pages environment's branch policy only admits the default
-    # branch, so triggering on main alone gets rejected before deploy.
-    # The concurrency group below keeps the two from racing.
+    # Triggered on both branches, which are kept in sync. The job below
+    # then deploys only from whichever one is currently the repo default,
+    # so this needs no edit when the default changes to main.
     branches:
       - main
       - claude/jeepquest-game-dev-k8i6ss
@@ -31,6 +29,12 @@ concurrency:
 
 jobs:
   deploy:
+    # The github-pages environment admits only the repo's default branch;
+    # any other branch is rejected by its protection rule *after* a
+    # deployment record is created, leaving a failed deployment behind on
+    # every push. Skipping cleanly here instead means no failures, and the
+    # deploying branch follows the default automatically if it is changed.
+    if: github.ref_name == github.event.repository.default_branch
     runs-on: ubuntu-latest
     environment:
       name: github-pages

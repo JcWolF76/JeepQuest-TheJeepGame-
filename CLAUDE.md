@@ -19,13 +19,13 @@ Branches) that a session cannot make: repository-settings writes are
 refused by the session proxy.
 
 Until the default is flipped, the `github-pages` environment admits only
-`claude/jeepquest-game-dev-k8i6ss`, so deploys triggered from `main`
-fail with "Branch 'main' is not allowed to deploy to github-pages" while
-the session branch deploys fine. The workflow therefore triggers on
-both. **Once the default branch is `main`, delete the
-`claude/jeepquest-game-dev-k8i6ss` entry from the workflow's `on.push.
-branches` list** — otherwise every push produces one failing run from
-whichever branch is no longer the default.
+`claude/jeepquest-game-dev-k8i6ss`, so that is the branch the site
+actually deploys from. The workflow triggers on both branches but its
+job is gated on `github.ref_name == github.event.repository.
+default_branch`, so the non-default branch skips cleanly instead of
+leaving a failed deployment behind on every push — and the deploying
+branch follows the default automatically once it is changed to `main`.
+No workflow edit is needed at that point.
 
 Deploys run through `.github/workflows/deploy-pages.yml` (Pages source =
 **GitHub Actions**, not "deploy from a branch"). Every push to `main`
