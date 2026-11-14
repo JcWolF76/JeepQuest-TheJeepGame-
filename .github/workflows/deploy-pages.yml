@@ -9,7 +9,14 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # Both branches are kept in sync and both are deployable: the repo's
+    # default branch is still claude/jeepquest-game-dev-k8i6ss, and the
+    # github-pages environment's branch policy only admits the default
+    # branch, so triggering on main alone gets rejected before deploy.
+    # The concurrency group below keeps the two from racing.
+    branches:
+      - main
+      - claude/jeepquest-game-dev-k8i6ss
   workflow_dispatch:
 
 permissions:
