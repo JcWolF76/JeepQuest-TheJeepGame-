@@ -9,6 +9,24 @@
 GitHub Pages serves JeepQuest from `main` at the repo root:
 **https://jcwolf76.github.io/JeepQuest-TheJeepGame-/**
 
+### Outstanding: the default branch must be `main`
+
+The repo was created empty, so the first branch pushed —
+`claude/jeepquest-game-dev-k8i6ss` — became the default, and `main` was
+added later. `main` is the intended default and always has been; this
+was an error, not a decision. Changing it is a repo setting (Settings →
+Branches) that a session cannot make: repository-settings writes are
+refused by the session proxy.
+
+Until the default is flipped, the `github-pages` environment admits only
+`claude/jeepquest-game-dev-k8i6ss`, so deploys triggered from `main`
+fail with "Branch 'main' is not allowed to deploy to github-pages" while
+the session branch deploys fine. The workflow therefore triggers on
+both. **Once the default branch is `main`, delete the
+`claude/jeepquest-game-dev-k8i6ss` entry from the workflow's `on.push.
+branches` list** — otherwise every push produces one failing run from
+whichever branch is no longer the default.
+
 Deploys run through `.github/workflows/deploy-pages.yml` (Pages source =
 **GitHub Actions**, not "deploy from a branch"). Every push to `main`
 triggers it; it publishes the repo root as-is (no build step).
