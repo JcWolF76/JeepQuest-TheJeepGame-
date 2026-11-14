@@ -4,17 +4,42 @@
 
 ---
 
-## 1. Ship to `main`
+## 1. Ship to `main` — and verify the DEPLOY, not just the push
 
 GitHub Pages serves JeepQuest from `main` at the repo root:
 **https://jcwolf76.github.io/JeepQuest-TheJeepGame-/**
 
-Same deploy model as PlateQuest: Pages builds from `main` / (root), no
-Actions workflow, rebuild takes ~1 minute after a push. Per-session
-feature branches (`claude/<slug>-<id>`) exist so concurrent sessions
-don't collide — not because `main` is off-limits. Default workflow for
-shippable work: commit on the session branch, merge into `main`, push
-`main`, tell the user it's live.
+Deploys run through `.github/workflows/deploy-pages.yml` (Pages source =
+**GitHub Actions**, not "deploy from a branch"). Every push to `main`
+triggers it; it publishes the repo root as-is (no build step).
+
+**Do not "simplify" this back to deploy-from-a-branch.** That mode was
+tried first and silently broke: Pages' branch mode rebuilds on push, but
+pushes made with a GitHub App token — which is how Claude Code on the
+web pushes — do **not** trigger those builds. The result was a live site
+frozen at one commit while six later commits sat on GitHub, fully
+pushed, never deployed. The user lost significant time to this because
+sessions kept reporting "pushed and live" after checking only `git`.
+
+**A push is not a deploy. Verify the deploy before telling the user
+anything shipped:**
+
+```
+gh api repos/JcWolF76/JeepQuest-TheJeepGame-/deployments \
+  --jq '.[0] | "\(.created_at) \(.sha[0:7])"'
+```
+
+That SHA must match what you just pushed. (`gh api .../pages` and
+`.../pages/builds` are blocked by the session proxy; `deployments` and
+`actions/runs` work.) This sandbox also cannot reach `github.io` at all,
+so you cannot fetch the live page to check — the deployments API is the
+only ground truth available to you. If it disagrees with what you
+pushed, say so plainly rather than attributing it to the user's cache.
+
+Per-session feature branches (`claude/<slug>-<id>`) exist so concurrent
+sessions don't collide — not because `main` is off-limits. Default
+workflow for shippable work: commit on the session branch, merge into
+`main`, push `main`, confirm the deployment SHA, then tell the user.
 
 Skip the merge-to-main step only if the user says the work is WIP or
 asks for a PR-review flow on that task.

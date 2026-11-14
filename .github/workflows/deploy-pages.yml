@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+# Why this workflow exists (see CLAUDE.md section 1):
+# Pages' legacy "deploy from a branch" mode rebuilds on push — but pushes
+# made with a GitHub App token (how Claude Code on the web pushes) do NOT
+# trigger those builds. That silently froze the live site at one commit
+# while six later commits sat on GitHub undeployed. Building through
+# Actions instead means every push deploys, whoever pushed it.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          # The site is the repo root — plain static HTML/CSS/JS, no build step.
+          path: '.'
+      - id: deployment
+        uses: actions/deploy-pages@v4
